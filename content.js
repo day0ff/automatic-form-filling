@@ -8,13 +8,8 @@ chrome.runtime.onMessage.addListener(
     console.log(getUrl());
     if (request.request == "setLocalStorage") {
       let inputs = Array.from(document.getElementsByTagName('input')).filter(inputsFilter);
-      // let inputs = Array.from(document.getElementsByTagName('input')).filter((element) => {
-      //   return element.type != "submit" && element.type != "reset" && element.type != "file";
-      // });
       console.log("inputs length = " + inputs.length);
       inputs.forEach((element, index) => {
-        // forceRedraw(element);
-        // console.log(element);
         /*
         let attributes = new Array(element.attributes.length);
         Array.from(element.attributes).forEach((attribute, index) => {
@@ -28,13 +23,8 @@ chrome.runtime.onMessage.addListener(
         if (element.type == "radio" || element.type == "checkbox") {
           input.value = element.checked;
         }
-        // if(element.type == "checkbox") {
-        //   input.value = element.checked;
-        // }
-        // if (inputsFilter(element)) inputs[index] = input;
         inputs[index] = input;
         console.log(index + " " + inputs[index].value + " / " + inputs[index].type);
-        // localStorage.setItem(index, JSON.stringify(input));
       });
       data.inputs = inputs;
       let textareas = Array.from(document.getElementsByTagName('textarea'));
@@ -44,9 +34,19 @@ chrome.runtime.onMessage.addListener(
         }
         textareas[index] = textarea;
         console.log(index + " " + textareas[index].value + " / textarea");
-        // localStorage.setItem(index, JSON.stringify(textarea));
       });
       data.textareas = textareas;
+      /**
+       *
+       */
+      let selects = Array.from(document.getElementsByTagName('select'));
+      selects.forEach((element, index) => {
+        selects[index] = Array.from(element.options)
+          .filter(option => option.selected)
+          .map(option => option.index);
+        console.log(index + " " + selects[index].toString());
+      });
+      data.selects = selects;
       localStorage.setItem(getUrl(), JSON.stringify(data));
       sendResponse({
         reply: "complite"
@@ -63,16 +63,26 @@ chrome.runtime.onMessage.addListener(
         } else {
           element.value = input.value;
         }
-        console.log("set " + index + " " + input.value + " " + input.type);
+        console.log("set " + index + " " + input.value + " " + input.type + " / input");
       });
       let textareas = Array.from(document.getElementsByTagName('textarea'));
       textareas.forEach((element, index) => {
         element.value = url.textareas[index].value;
+        console.log("set " + index + " " + element.value + " / textarea");
+      });
+      let selects = Array.from(document.getElementsByTagName('select'));
+      selects.forEach((element, index) => {
+        Array.from(element.options)
+          .filter(option => url.selects[index].includes(option.index))
+          .forEach(option => {
+            option.selected = true;
+            console.log("set " + index + " " + option.index + " " + option.text + " / option");
+          });
+      });
+      sendResponse({
+        reply: "complite"
       });
     }
-    sendResponse({
-      reply: "complite"
-    });
   });
 
 function getUrl() {
