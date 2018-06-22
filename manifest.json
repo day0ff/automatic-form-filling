@@ -1,27 +1,27 @@
 {
 
   "manifest_version": 2,
-  "name": "Fill forms inputs",
-  "version": "0.0.1",
+  "name": "bucket",
+  "version": "0.0.2",
 
-  "description": "Fill page forms inputs.",
+  "description": "Stores data entered to forms for current page and fills them for your next time on request.",
 
   "icons": {
-    "16": "icons/icon16.png",
-    "32": "icons/icon32.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "icons/bucket16.png",
+    "32": "icons/bucket32.png",
+    "48": "icons/bucket48.png",
+    "128": "icons/bucket128.png"
   },
 
   "permissions": [
-		"activeTab",
+    "activeTab",
     "declarativeContent",
-		"storage"
-    ],
+    "storage"
+  ],
 
   "page_action": {
-    "default_icon": "icons/icon32.png",
-    "default_title": "Fill page forms inputs.",
+    "default_icon": "icons/bucket32.png",
+    "default_title": "Stores the data entered to forms.",
     "default_popup": "popup/popup.html"
   },
 
@@ -30,11 +30,9 @@
     "persistent": false
   },
 
-  "content_scripts": [
-    {
-      "matches": ["*://localhost/*"],
-      "js": ["content.js"]
-    }
-  ]
+  "content_scripts": [{
+    "matches": ["*://localhost/*"],
+    "js": ["content.js"]
+  }]
 
 }
