@@ -1,3 +1,40 @@
 body {
-  width: 300px;
+  width: 270px;
+  /* border: solid 2px orange; */
+  padding: 0.5em;
+}
+
+p {
+  float: none;
+  font-size: 1.2em;
+  text-align: justify;
+  vertical-align: middle;
+  padding: 0.2em;
+}
+div{
+  clear: both;
+}
+div img {
+  float: left;
+}
+button, #menu{
+  border:solid 2px gray;
+  border-radius: 5px;
+}
+button:hover, #menu:hover{
+  cursor: pointer;
+  color: #400000;
+  border-color: #400000;
+}
+button {
+  font-size: 1.2em;
+  background-color: white;
+  width: 110px;
+  height: 35px;
+}
+#menu{
+  float:right;
+  width: 35px;
+  height: 35px;
+  padding: 3px;
 }
