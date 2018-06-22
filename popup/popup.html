@@ -10,7 +10,7 @@
 <body>
   <div>
     <img src="../icons/bucket64.png">
-    <p>Stores data entered to forms for current page and fills them for your next time on request.</p>
+    <p>Stores data entered to forms for current page and fills them for your next time.</p>
   </div>
   <br/>
   <div>
@@ -18,7 +18,10 @@
     <button id="getLocalStorage" title="Fill forms whith saved data.">Fill forms</button>
     <button id="menu"><img src="../icons/menu.png" title="menu" width="25" height="25"></button>
   </div>
-  <div><button id="restoreLocalStorage">Undo save</button></div>
+  <div id="menu-container" style="display:none;">
+    <hr/>
+    <button id="restoreLocalStorage" class="lock">Undo save</button>
+  </div>
   <script src="popup.js"></script>
 </body>
 

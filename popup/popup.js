@@ -4,9 +4,6 @@ document.getElementById("setLocalStorage").addEventListener("click", function(e)
 document.getElementById("getLocalStorage").addEventListener("click", function(e) {
   mackeQuery(this, "getLocalStorage");
 });
-document.getElementById("restoreLocalStorage").addEventListener("click", function(e) {
-  mackeQuery(this, "restoreLocalStorage");
-});
 
 function mackeQuery(element, message) {
   chrome.tabs.query({
@@ -25,3 +22,15 @@ function mackeQuery(element, message) {
     });
   });
 }
+
+document.getElementById("menu").addEventListener("click", function(e) {
+  let menuContainer = document.getElementById("menu-container");
+  if (menuContainer.style.display == "none") {
+    menuContainer.style.display = "block";
+  } else {
+    menuContainer.style.display = "none";
+  }
+});
+document.getElementById("restoreLocalStorage").addEventListener("click", function(e) {
+  mackeQuery(this, "restoreLocalStorage");
+});
