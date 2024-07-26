@@ -1,2 +1,6 @@
 # temp directory
 /temp
+
+# dependencies
+/node_modules
+.idea

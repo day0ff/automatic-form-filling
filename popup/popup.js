@@ -1,6 +1,7 @@
 document.getElementById("setLocalStorage").addEventListener("click", function(e) {
   mackeQuery(this, "setLocalStorage");
 });
+
 document.getElementById("getLocalStorage").addEventListener("click", function(e) {
   mackeQuery(this, "getLocalStorage");
 });
@@ -13,7 +14,6 @@ function mackeQuery(element, message) {
     chrome.tabs.sendMessage(tabs[0].id, {
       request: message
     }, function(response) {
-      console.log(response.reply);
       let text = element.innerHTML;
       setTimeout(() => {
         element.innerHTML = text;
@@ -25,7 +25,7 @@ function mackeQuery(element, message) {
 
 document.getElementById("menu").addEventListener("click", function(e) {
   let menuContainer = document.getElementById("menu-container");
-  if (menuContainer.style.display == "none") {
+  if (menuContainer.style.display === "none") {
     menuContainer.style.display = "block";
   } else {
     menuContainer.style.display = "none";

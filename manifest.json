@@ -1,6 +1,6 @@
 {
 
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "bucket",
   "version": "0.0.2",
 
@@ -19,19 +19,18 @@
     "storage"
   ],
 
-  "page_action": {
+  "action": {
     "default_icon": "icons/bucket32.png",
     "default_title": "Stores the data entered to forms.",
     "default_popup": "popup/popup.html"
   },
 
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js"
   },
 
   "content_scripts": [{
-    "matches": ["*://localhost/*"],
+    "matches": ["<all_urls>"],
     "js": ["content.js"]
   }]
 

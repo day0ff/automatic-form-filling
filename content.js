@@ -1,26 +1,28 @@
+const BUCKET = 'bucket';
+
 document.body.style.border = "5px solid yellow";
+
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(getUrl());
-    if (request.request == "setLocalStorage") {
+    if (request.request === "setLocalStorage") {
       saveForms();
       sendResponse({
-        reply: "Complite"
+        reply: "Complete"
       });
     }
-    if (request.request == "getLocalStorage") {
+    if (request.request === "getLocalStorage") {
       console.log(fillForms());
       sendResponse({
-        reply: "Complite"
+        reply: "Complete"
       });
     }
-    if (request.request == "restoreLocalStorage") {
-      let data = sessionStorage.getItem(getUrl());
+    if (request.request === "restoreLocalStorage") {
+      let data = sessionStorage.getItem(BUCKET);
       if (data) {
-        localStorage.setItem(getUrl(), data);
+        localStorage.setItem(BUCKET, data);
         console.log(fillForms());
         sendResponse({
-          reply: "Complite"
+          reply: "Complete"
         });
       } else {
         console.log("data not set.");
@@ -28,17 +30,12 @@ chrome.runtime.onMessage.addListener(
     }
   });
 
-function getUrl() {
-  return window.location.href;
-}
-
 function inputsFilter(element) {
-  if (element.type != "submit" && element.type != "reset" && element.type != "file") return true;
-  return false;
+  return element.type !== "submit" && element.type !== "reset" && element.type !== "file";
 }
 
 function saveForms() {
-  let data = new Object();
+  let data = {};
   let inputs = Array.from(document.getElementsByTagName('input')).filter(inputsFilter);
   console.log("inputs length = " + inputs.length);
   inputs.forEach((element, index) => {
@@ -46,7 +43,7 @@ function saveForms() {
       value: element.value,
       type: element.type
     }
-    if (element.type == "radio" || element.type == "checkbox") {
+    if (element.type === "radio" || element.type === "checkbox") {
       input.value = element.checked;
     }
     inputs[index] = input;
@@ -55,10 +52,9 @@ function saveForms() {
   data.inputs = inputs;
   let textareas = Array.from(document.getElementsByTagName('textarea'));
   textareas.forEach((element, index) => {
-    let textarea = {
+    textareas[index] = {
       value: element.value
-    }
-    textareas[index] = textarea;
+    };
     console.log(index + " " + textareas[index].value + " / textarea");
   });
   data.textareas = textareas;
@@ -70,19 +66,18 @@ function saveForms() {
     console.log(index + " " + selects[index].toString());
   });
   data.selects = selects;
-  sessionStorage.setItem(getUrl(), localStorage.getItem(getUrl()));
-  localStorage.setItem(getUrl(), JSON.stringify(data));
+  sessionStorage.setItem(BUCKET, localStorage.getItem(BUCKET));
+  localStorage.setItem(BUCKET, JSON.stringify(data));
 }
 
 function fillForms() {
-  let data = new Object();
-  let url = JSON.parse(localStorage.getItem(getUrl()));
+  let url = JSON.parse(localStorage.getItem(BUCKET));
   if (!url) {return "storage is empty";}
     let inputs = Array.from(document.getElementsByTagName('input')).filter(inputsFilter);
     console.log("inputs length = " + inputs.length);
     inputs.forEach((element, index) => {
       let input = url.inputs[index];
-      if (element.type == "radio" || element.type == "checkbox") {
+      if (element.type === "radio" || element.type === "checkbox") {
         element.checked = input.value;
       } else {
         element.value = input.value;
@@ -103,5 +98,5 @@ function fillForms() {
           console.log("set " + index + " " + option.index + " " + option.text + " / option");
         });
     });
-    return "complite";
+    return "Complete";
 }
